@@ -108,6 +108,7 @@ class M3UPlaylistsProvider(backend.PlaylistsProvider):
             name, _ = os.path.splitext(os.path.basename(path).decode(encoding))
         else:
             raise ValueError('M3U playlist needs name or URI')
-        translator.save_m3u(path, playlist.tracks, 'latin1')
+        playlist_encoding = 'utf-8' if path.endswith('.m3u8') else 'latin-1'
+        translator.save_m3u(path, playlist.tracks, playlist_encoding)
         # assert playlist name matches file name/uri
         return playlist.copy(uri=uri, name=name)
